@@ -1,0 +1,153 @@
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.stats-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  /* border: 1px solid #ddd; */
+}
+
+button {
+  margin-right: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button.approve {
+  background: #28a745;
+  color: white;
+}
+
+button.reject {
+  background: #dc3545;
+  color: white;
+}
+
+.details-card {
+  margin-top: 20px;
+  background: #eef;
+  padding: 15px;
+  border-radius: 8px;
+}
+/* Background dim when modal open */
+.modal-open {
+  overflow: hidden;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+}
+
+.modal-container {
+  background-color: white;
+  padding: 1.5rem; /* 24px */
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  width: 90%;
+  /* CRITICAL CHANGE: Increase max-width to make it wider like the Svelte design */
+  max-width: 56rem; /* 896px (Equivalent to Tailwind max-w-4xl) */
+  z-index: 50;
+  max-height: 90vh; /* Allows scrolling if the content is long */
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease-in-out; /* Keep the nice animation */
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.companion-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
+  align-items: center;
+  padding-bottom: 0.75rem; /* 12px */
+  border-bottom: 1px solid #e5e7eb; /* Subtle separator */
+}
+
+.companion-card:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+
+
+/* This styles the white popup box itself */
+
+
+/* Your TS code adds 'modal-open' to the <body>. 
+  This style prevents the page behind the modal from scrolling.
+*/
+:host-context(body.modal-open) {
+  overflow: hidden;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* dark translucent bg */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modal-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+}
+
+
+

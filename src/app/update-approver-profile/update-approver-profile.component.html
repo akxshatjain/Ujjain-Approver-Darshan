@@ -1,0 +1,165 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+  <!-- ✅ Submitted Success View -->
+  <div *ngIf="submitted" class="w-full max-w-2xl bg-white rounded-3xl shadow-xl p-10">
+    <div class="flex items-center gap-4">
+      <img
+        class="w-20 h-20 rounded-full"
+        [src]="profileData?.avatar || 'https://ui-avatars.com/api/?name=' + (name || 'User') + '&background=random'"
+        alt="Profile avatar"
+      />
+      <div class="flex-1">
+        <h3 class="text-2xl font-semibold text-gray-800">Profile Updated</h3>
+        <p class="text-sm text-gray-600 mt-1">
+          Your profile details have been saved successfully.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex gap-3 justify-end">
+      <button
+        (click)="goToDashboard()"
+        class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
+      >
+        Go to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- 🧾 Update Form View -->
+  <div *ngIf="!submitted" class="w-full max-w-4xl bg-white rounded-3xl shadow-xl p-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Left Aside -->
+      <aside class="md:col-span-1 flex flex-col items-center text-center p-4">
+        <img
+          class="w-32 h-32 rounded-full"
+          [src]="profileData?.avatar || 'https://ui-avatars.com/api/?name=' + (name || 'User') + '&background=random'"
+          alt="User avatar"
+        />
+        <h2 class="mt-4 text-xl font-semibold">Update Your Profile</h2>
+        <p class="mt-2 text-sm text-gray-600">
+          A few details to complete your approver account.
+        </p>
+        <span class="mt-4 bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Approver</span>
+      </aside>
+
+      <!-- Right Section -->
+      <section class="md:col-span-2">
+        <form (ngSubmit)="handleSubmit()" novalidate class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-gray-700 font-medium">Full Name</label>
+              <input
+                id="name"
+                type="text"
+                [(ngModel)]="name"
+                name="name"
+                placeholder="John Doe"
+                class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div>
+              <label for="gender" class="block text-gray-700 font-medium">Gender</label>
+              <select
+                id="gender"
+                [(ngModel)]="gender"
+                name="gender"
+                class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="" disabled>Select Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="non-binary">Non-binary</option>
+                <option value="prefer-not-to-say">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="dob" class="block text-gray-700 font-medium">Date of Birth</label>
+              <input
+                id="dob"
+                type="date"
+                [(ngModel)]="dob"
+                name="dob"
+                class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div>
+              <label for="aadhar" class="block text-gray-700 font-medium">Aadhar (optional)</label>
+              <input
+                id="aadhar"
+                type="text"
+                [(ngModel)]="aadhar"
+                name="aadhar"
+                placeholder="1234 5678 9012"
+                maxlength="20"
+                class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="address" class="block text-gray-700 font-medium">Address</label>
+            <textarea
+              id="address"
+              [(ngModel)]="address"
+              name="address"
+              rows="3"
+              placeholder="123 Main St, Anytown"
+              class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            ></textarea>
+          </div>
+
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-sm text-gray-500">
+              Fields can be updated later from your profile settings.
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                (click)="resetForm()"
+                class="px-4 py-2 rounded-full border border-gray-300 bg-gray-50 hover:bg-gray-100 transition"
+              >
+                Reset
+              </button>
+
+              <button
+                type="submit"
+                [disabled]="loading"
+                class="px-5 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 flex items-center transition"
+              >
+                <svg
+                  *ngIf="loading"
+                  class="animate-spin h-4 w-4 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                {{ loading ? 'Saving…' : 'Update Profile' }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,314 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+      <!-- Header -->
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-extrabold text-slate-800">
+            Darshan Management Console
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">
+            Workspace for Protocol Officer & Approver. Monitoring status as of today.
+          </p>
+        </div>
+
+<button
+  class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl hover:bg-slate-200 transition disabled:opacity-50 font-medium"
+  (click)="refresh()"
+  [disabled]="loading"
+>
+  {{ loading ? 'Refreshing...' : 'Refresh' }}
+</button>
+      </div>
+
+      <h2 class="text-lg font-bold text-slate-700 mt-6 mb-3">
+        Booking Summaries
+      </h2>
+
+      <!-- Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div *ngFor="let d of darshanOrder" class="rounded-xl bg-slate-100 p-4 shadow-sm">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-lg font-bold text-slate-800">{{ d.title }}</h3>
+              <div class="mt-2 text-sm text-slate-600 space-y-1">
+                <div class="flex justify-between">
+                  <span>Received (Pending)</span>
+                  <span class="font-semibold text-red-500">{{ stats[d.key]?.Pending || 0 }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Approved</span>
+                  <span class="font-semibold text-green-600">{{ stats[d.key]?.Approved || 0 }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Rejected</span>
+                  <span class="font-semibold text-slate-500">{{ stats[d.key]?.Rejected || 0 }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-slate-400">TOTAL BOOKINGS</div>
+              <div class="text-2xl font-extrabold mt-1">
+                {{ getTotal(stats[d.key]) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Bookings -->
+      <div class="mt-6 bg-slate-50 p-4 rounded-xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-slate-700">Bookings Pending Verification</h3>
+          <p class="text-sm text-slate-500">Approve / Reject per booking below</p>
+        </div>
+
+        <div *ngIf="error" class="text-red-600 mb-3">Error: {{ error }}</div>
+
+        <div class="overflow-x-auto rounded-lg">
+          <table class="min-w-full bg-white rounded-xl shadow">
+            <thead>
+              <tr class="text-left text-xs uppercase text-slate-500 bg-slate-100">
+                <th class="p-3">Booking ID</th>
+                <th class="p-3">Type</th>
+                <th class="p-3">Devotee Name</th>
+                <th class="p-3">Date</th>
+                <th class="p-3">Status</th>
+                <th class="p-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading && bookings.length === 0">
+                <td colspan="6" class="p-4 text-slate-500">Loading bookings…</td>
+              </tr>
+              <tr *ngIf="!loading && bookings.length === 0">
+                <td colspan="6" class="p-4 text-slate-500">
+                  No bookings found for the current filters.
+                </td>
+              </tr>
+
+              <tr *ngFor="let b of bookings"  class="border-t">
+                <td class="p-3 font-medium">{{ b.name }}</td>
+                <td class="p-3 text-sm text-slate-600">{{ b.appointment_type }}</td>
+                <td class="p-3">{{ b.primary_devoteee_name }}</td>
+                <td class="p-3 text-sm text-slate-500">{{ b.appointment_date }}</td>
+                <td class="p-3">
+                  <span
+                    class="px-2 py-1 rounded-md text-xs font-semibold"
+                    [ngClass]="{
+                      'bg-green-100 text-green-800': b.workflow_state === 'Approved',
+                      'bg-orange-100 text-orange-800': b.workflow_state === 'Pending',
+                      'bg-red-100 text-red-800': b.workflow_state === 'Rejected',
+                      'bg-blue-100 text-blue-800': b.workflow_state === 'Pending Verification'
+                    }"
+                  >
+                    {{ b.workflow_state }}
+                  </span>
+                </td>
+                <td class="p-3 flex gap-2">
+                  <button
+                    class="bg-slate-200 px-3 py-1 rounded-md hover:bg-slate-300"
+                    (click)="openModal(b)"
+                  >
+                    Open
+                  </button>
+
+                  <button
+                    *ngIf="b.workflow_state === 'Pending'"
+                    class="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700"
+                    (click)="approveSingle(b.name)"
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    *ngIf="b.workflow_state === 'Pending'"
+                    class="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700"
+                    (click)="rejectSingle(b.name)"
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+<!-- Booking Details Modal -->
+<div *ngIf="selectedBooking" class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-gray-800">
+        Appointment Details
+      </h2>
+      <button
+        (click)="closeModal()"
+        class="text-gray-400 hover:text-gray-800 text-2xl font-bold"
+      >
+        ×
+      </button>
+    </div>
+
+<div class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+  
+  <div>
+    <p class="text-gray-500">Primary Devotee:</p>
+    <p class="font-medium">
+      <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-green-100 text-green-800">
+        {{ selectedBooking.primary_devoteee_name }}
+      </span>
+    </p>
+  </div>
+  
+  <div>
+    <p class="text-gray-500">Appointment ID:</p>
+    <p class="font-medium text-gray-800">{{ selectedBooking.name }}</p>
+  </div>
+  
+  <div>
+    <p class="text-gray-500">Status:</p>
+    <p class="font-medium">
+      <span
+        class="px-2 py-0.5 rounded-md text-xs font-semibold"
+        [ngClass]="{
+          'bg-green-100 text-green-800': selectedBooking.workflow_state === 'Approved',
+          'bg-orange-100 text-orange-800': selectedBooking.workflow_state === 'Pending',
+          'bg-red-100 text-red-800': selectedBooking.workflow_state === 'Rejected',
+          'bg-blue-100 text-blue-800': selectedBooking.workflow_state === 'Pending Verification'
+        }"
+      >
+        {{ selectedBooking.workflow_state }}
+      </span>
+    </p>
+  </div>
+
+  <div>
+    <p class="text-gray-500">Type:</p>
+    <p class="font-medium text-gray-800">{{ selectedBooking.appointment_type }}</p>
+  </div>
+
+  <div>
+    <p class="text-gray-500">Date:</p>
+    <p class="font-medium text-gray-800">{{ selectedBooking.appointment_date }}</p>
+  </div>
+
+  <div>
+    <p class="text-gray-500">Time:</p>
+    <p class="font-medium text-gray-800">
+      {{ selectedBooking.slot_start_time }} to {{ selectedBooking.slot_end_time }}
+    </p>
+  </div>
+  
+  <div>
+    <p class="text-gray-500">With Protocol:</p>
+    <p class="font-medium text-gray-800">{{ selectedBooking.with_protocol || 'No' }}</p>
+  </div>
+
+  <div>
+    <p class="text-gray-500">Protocol Rank:</p>
+    <p class="font-medium text-gray-800">{{ selectedBooking.protocol_rank || 'N/A' }}</p>
+  </div>
+
+  <div class="col-span-2">
+    <p class="text-gray-500">Group Size:</p>
+    <p class="font-medium">
+      <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-blue-100 text-blue-800">
+        {{ selectedBooking.group_size || 1 }}
+      </span>
+    </p>
+  </div>
+</div>
+
+<div *ngIf="companions.length > 0" class="mt-4">
+  <h3 class="font-semibold mb-2 text-gray-800">Companions:</h3>
+  <div class="border rounded-lg p-3 space-y-3">
+    
+    <div *ngFor="let c of companions" class="companion-card">
+      
+      <div>
+        <p class="font-semibold text-gray-900">{{ c.companion_name }}</p>
+        <p class="text-sm text-gray-600 capitalize">{{ c.companion_gender }}</p>
+      </div>
+      
+      <div class="text-sm text-gray-800 justify-self-center my-auto">
+        Age : <span class="font-medium">{{ c.companion_age }}</span>
+      </div>
+      
+      <div class="text-sm text-gray-800 justify-self-end my-auto">
+        phone : 
+        <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-green-100 text-green-800">
+          {{ c.companion_phone }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="flex justify-start mt-5 space-x-3">
+  <button
+    (click)="showJson()"
+    class="bg-slate-100 text-slate-700 px-4 py-1.5 rounded-md hover:bg-slate-200 transition font-medium"
+  >
+    Show raw JSON
+  </button>
+
+  <button
+    (click)="copyJson()"
+    class="bg-slate-100 text-slate-700 px-4 py-1.5 rounded-md hover:bg-slate-200 transition font-medium"
+  >
+    Copy JSON
+  </button>
+</div>
+
+
+
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- JSON Modal -->
+<!-- JSON Modal -->
+<div
+  *ngIf="showJsonModal"
+  class="modal-backdrop"
+  (click)="closeJsonModal()"
+>
+  <div
+    class="modal-container max-w-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <div
+      class="bg-white rounded-2xl shadow-lg w-full mx-4 p-6 relative animate-fadeIn"
+    >
+      <!-- Close Button -->
+      <button
+        (click)="closeJsonModal()"
+        class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+      >
+        ×
+      </button>
+
+      <!-- Header -->
+      <h3 class="text-lg font-bold text-gray-800 mb-4">
+        Raw JSON Data
+      </h3>
+
+      <!-- JSON Content -->
+      <pre
+        class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm overflow-auto max-h-[55vh] text-gray-800"
+      >
+{{ jsonData }}
+      </pre>
+    </div>
+  </div>
+</div>
+

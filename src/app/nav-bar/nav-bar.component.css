@@ -1,0 +1,65 @@
+/* Smooth transitions */
+nav {
+  transition: background-color 0.3s ease;
+}
+
+/* Hover & active link styles */
+a {
+  transition: color 0.2s ease-in-out;
+}
+a:hover {
+  color: #2563eb; /* Tailwind blue-600 */
+}
+a.router-link-active {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Buttons */
+button {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Mobile animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+div[ngIf] {
+  animation: fadeIn 0.2s ease-in-out;
+}
+nav {
+  transition: background-color 0.3s ease;
+}
+
+a {
+  transition: color 0.2s ease-in-out;
+}
+
+a.router-link-active {
+  color: #2563eb; /* blue-600 */
+  font-weight: 600;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+div[ngIf] {
+  animation: fadeIn 0.2s ease-in-out;
+}
+

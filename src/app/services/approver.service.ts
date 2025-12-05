@@ -9,7 +9,7 @@ export class ApproverService {
 
   
   // ✅ Store IP in one variable
-  private API_IP = 'http://10.120.9.42:8890';
+  private API_IP = 'http://10.120.10.245:8890';
 
   // ✅ Base URL auto-built using IP
   private baseUrl =
@@ -116,4 +116,21 @@ export class ApproverService {
       return null;
     }
   }
+// ✅ REGISTER APPROVER
+async registerApprover(phone: number): Promise<any> {
+  try {
+    return await firstValueFrom(
+      this.http.post(
+        `${this.API_IP}/api/method/mahakaal.darshan_booking.doctype.darshan_approver_profile.darshan_approver_profile.create_approver`,
+        { phone },
+        this.getAuthHeaders()
+      )
+    );
+  } catch (error) {
+    console.error("Registration failed:", error);
+    return null;
+  }
+}
+
+
 }

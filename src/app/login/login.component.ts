@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';   // ✅ FIXED import
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  phone: string = '999';
+  phone: string = '';
   password: string = 'Mpsedc123';
   loading = false;
 

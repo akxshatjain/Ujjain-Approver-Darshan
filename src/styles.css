@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+    :root {
+        --color-saffron: #FF7722;
+        --color-gold: #FFB700;
+        --color-official-red: #8B0000;
+    }
+
+    html {
+        font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+        @apply antialiased text-slate-900 bg-orange-50;
+        /* Warmer background */
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Outfit', sans-serif;
+    }
+}
+
+@layer utilities {
+    .glass {
+        @apply bg-white/80 backdrop-blur-lg border border-orange-200/50 shadow-xl;
+    }
+
+    .glass-dark {
+        @apply bg-orange-950/90 backdrop-blur-lg border border-orange-700/50 shadow-xl;
+    }
+
+    .text-gradient-spiritual {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-orange-800;
+    }
+
+    .bg-gradient-spiritual {
+        @apply bg-gradient-to-r from-orange-600 to-red-600;
+    }
+
+    /* Custom 'Damru/Trishul' inspired Spinner */
+    .loader-spiritual {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #FF7722;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        position: relative;
+    }
+
+    .loader-spiritual::after {
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        left: 17px;
+        top: 0;
+        border: 12px solid transparent;
+        border-right-color: #FFB700;
+        /* Gold Accent */
+        transform: rotate(45deg);
+    }
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}

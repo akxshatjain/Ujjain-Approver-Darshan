@@ -1,0 +1,122 @@
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 p-4">
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center gap-4">
+    <span class="loader-spiritual"></span>
+    <span class="text-orange-600 font-medium animate-pulse">Retrieving Profile...</span>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error"
+    class="text-red-700 bg-red-50 border-l-4 border-red-600 px-6 py-4 rounded-r shadow-sm max-w-lg w-full">
+    <div class="font-bold mb-1">Error Loading Profile</div>
+    {{ error }}
+  </div>
+
+  <!-- Profile -->
+  <div *ngIf="!loading && profile"
+    class="glass w-full max-w-2xl p-8 bg-white/90 shadow-2xl rounded-[2.5rem] border-t-8 border-orange-500 relative overflow-hidden">
+
+    <!-- Background Decoration -->
+    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-200 rounded-bl-full -mr-10 -mt-10 opacity-40"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 bg-red-100 rounded-tr-full -ml-10 -mb-10 opacity-40"></div>
+
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 mb-8">
+      <div class="relative group">
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity">
+        </div>
+        <img class="relative w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
+          [src]="'https://ui-avatars.com/api/?name=' + (profile.devoteee_name || profile.owner || 'User') + '&background=FFB700&color=fff&size=256'"
+          alt="Avatar" />
+        <div class="absolute bottom-1 right-2 w-6 h-6 bg-green-500 border-2 border-white rounded-full" title="Active">
+        </div>
+      </div>
+
+      <div class="text-center md:text-left">
+        <div
+          class="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full mb-2 uppercase tracking-wide border border-orange-200">
+          Official Approver
+        </div>
+        <h2 class="text-4xl font-bold text-slate-800 mb-1 font-['Outfit']">
+          {{ profile.approver_name || profile.name }}
+        </h2>
+        <p class="text-slate-500 text-lg font-medium">
+          {{ profile.doctype || 'Protocol Officer' }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Profile Info Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10 bg-white/50 rounded-2xl p-6 border border-orange-100/50 backdrop-blur-sm">
+
+      <!-- Field Component -->
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Mobile Number</span>
+        <div class="font-semibold text-slate-800 text-lg">{{ profile.phone || '—' }}</div>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</span>
+        <div class="font-semibold text-slate-800">{{ profile.email || profile.frappe_profile || '—' }}</div>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Gender</span>
+        <div class="font-semibold text-slate-800 capitalize">{{ profile.gender || '—' }}</div>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Date of Birth</span>
+        <div class="font-semibold text-slate-800">{{ profile.dob || '—' }}</div>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">E-KYC Status</span>
+        <div>
+          <span
+            [ngClass]="truthyInt(profile.is_ekyc_complete) ? 'bg-green-100 text-green-700 border-green-200' : 'bg-orange-100 text-orange-700 border-orange-200'"
+            class="inline-flex px-2.5 py-0.5 rounded-md text-sm font-bold border">
+            {{ truthyInt(profile.is_ekyc_complete) ? 'Verified' : 'Pending' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Companion Access</span>
+        <div>
+          <span
+            [ngClass]="truthyInt(profile.is_devoteee_companion) ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-slate-100 text-slate-600 border-slate-200'"
+            class="inline-flex px-2.5 py-0.5 rounded-md text-sm font-bold border">
+            {{ truthyInt(profile.is_devoteee_companion) ? 'Enabled' : 'Disabled' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="md:col-span-2 space-y-1">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Registered Address</span>
+        <div class="font-medium text-slate-700">{{ profile.address || '—' }}</div>
+      </div>
+
+    </div>
+
+    <!-- Update Button -->
+    <div class="mt-8 flex justify-center">
+      <button (click)="updateProfile()"
+        class="group relative px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold shadow-lg shadow-orange-200 hover:shadow-xl hover:scale-105 transition-all duration-300 overflow-hidden">
+        <span class="relative z-10 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+          Edit Profile Details
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- No Profile -->
+  <p *ngIf="!loading && !profile && !error" class="text-slate-500 font-medium bg-white px-6 py-4 rounded-xl shadow-sm">
+    No profile information found on server.
+  </p>
+</div>

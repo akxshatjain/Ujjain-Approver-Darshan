@@ -1,0 +1,148 @@
+<nav class="sticky top-0 z-50 w-full glass border-b border-orange-200/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+
+      <!-- Brand -->
+      <div class="flex items-center gap-6">
+        <a routerLink="/homepage"
+          class="text-2xl font-bold tracking-tight text-slate-800 hover:opacity-80 transition-opacity flex items-center gap-2">
+          <!-- Logo Icon -->
+          <div
+            class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 border border-orange-200">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <span class="text-gradient-spiritual">Mahakal Darshan</span>
+          <span
+            class="hidden sm:inline-block text-slate-500 text-lg font-medium border-l border-slate-300 pl-2 ml-2">Approver</span>
+        </a>
+
+        <!-- Navigation History (only when logged in) -->
+        <div *ngIf="userLoggedIn$ | async"
+          class="hidden md:flex items-center space-x-2 bg-orange-50/50 px-2 py-1 rounded-full border border-orange-100">
+          <button (click)="goBack()"
+            class="p-1.5 rounded-full text-slate-500 hover:text-orange-600 hover:bg-white shadow-sm transition-all"
+            title="Go Back">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button (click)="goForward()"
+            class="p-1.5 rounded-full text-slate-500 hover:text-orange-600 hover:bg-white shadow-sm transition-all"
+            title="Go Forward">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <ul class="flex items-center space-x-8 text-sm font-medium">
+          <!-- Public Links -->
+          <ng-container *ngIf="!(userLoggedIn$ | async)">
+            <li>
+              <a routerLink="/homepage" routerLinkActive="text-orange-600 font-bold"
+                class="text-slate-600 hover:text-orange-600 transition-colors duration-200">
+                Home
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- Authenticated Links -->
+          <ng-container *ngIf="userLoggedIn$ | async; else loggedOutLinks">
+            <li>
+              <a routerLink="/dashboard"
+                routerLinkActive="text-orange-600 font-bold bg-orange-50 px-3 py-1 rounded-full"
+                class="text-slate-600 hover:text-orange-600 transition-colors duration-200">
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a routerLink="/profile" routerLinkActive="text-orange-600 font-bold bg-orange-50 px-3 py-1 rounded-full"
+                class="text-slate-600 hover:text-orange-600 transition-colors duration-200">
+                Profile
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- Logged Out Links -->
+          <ng-template #loggedOutLinks>
+            <li>
+              <a routerLink="/registration" routerLinkActive="text-orange-600 font-bold"
+                class="text-slate-600 hover:text-orange-600 transition-colors duration-200">
+                Registration
+              </a>
+            </li>
+            <li>
+              <a routerLink="/login" routerLinkActive="scale-105 shadow-md"
+                class="px-5 py-2.5 rounded-full bg-gradient-spiritual text-white shadow-sm hover:shadow-orange-200 hover:scale-105 transition-all duration-200 font-semibold border border-orange-500">
+                Official Login
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+
+        <!-- Logout Button -->
+        <button *ngIf="userLoggedIn$ | async" (click)="logout()"
+          class="px-5 py-2 rounded-full border border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200 text-sm font-semibold flex items-center gap-2">
+          <span>Sign Out</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Menu -->
+      <div class="md:hidden flex items-center">
+        <button (click)="menuOpen = !menuOpen"
+          class="p-2 text-slate-600 rounded-lg hover:bg-orange-50 hover:text-orange-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="menuOpen"
+    class="md:hidden bg-white/95 backdrop-blur-xl border-t border-orange-100 absolute w-full left-0 shadow-xl">
+    <div class="px-4 py-6 space-y-4">
+      <a routerLink="/homepage" (click)="menuOpen=false"
+        class="block px-4 py-2 text-base font-medium text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">
+        Home
+      </a>
+
+      <ng-container *ngIf="userLoggedIn$ | async; else mobileLoggedOut">
+        <a routerLink="/dashboard" (click)="menuOpen=false"
+          class="block px-4 py-2 text-base font-medium text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">
+          Dashboard
+        </a>
+        <a routerLink="/profile" (click)="menuOpen=false"
+          class="block px-4 py-2 text-base font-medium text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">
+          Profile
+        </a>
+        <button (click)="logout(); menuOpen=false"
+          class="w-full text-left px-4 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+          Sign Out
+        </button>
+      </ng-container>
+
+      <ng-template #mobileLoggedOut>
+        <a routerLink="/registration" (click)="menuOpen=false"
+          class="block px-4 py-2 text-base font-medium text-slate-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">
+          Registration
+        </a>
+        <a routerLink="/login" (click)="menuOpen=false"
+          class="block px-4 py-2 text-base font-medium text-orange-600 bg-orange-50 rounded-lg transition-colors mt-2 font-bold">
+          Official Login
+        </a>
+      </ng-template>
+    </div>
+  </div>
+</nav>

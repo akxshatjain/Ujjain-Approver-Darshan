@@ -1,0 +1,80 @@
+<div class="min-h-screen relative flex items-center justify-center bg-orange-50 overflow-hidden p-4">
+
+  <!-- Background Decor (Circles) -->
+  <div class="absolute inset-0 z-0 opacity-15">
+    <div
+      class="absolute top-[10%] left-[10%] w-[500px] h-[500px] border-[30px] border-orange-200 rounded-full animate-pulse">
+    </div>
+    <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] border-[40px] border-red-200 rounded-full"></div>
+  </div>
+
+  <div class="w-full max-w-md relative z-10">
+    <div class="glass rounded-3xl p-10 shadow-2xl border-t-8 border-orange-500">
+
+      <div class="text-center mb-10">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-orange-100 text-orange-600 mb-4 shadow-inner border-2 border-orange-200">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold text-slate-900 font-['Outfit']">Protocol Login</h2>
+        <p class="text-orange-600 mt-2 text-sm uppercase tracking-widest font-bold">Official Approver Portal</p>
+      </div>
+
+      <form class="space-y-6" (ngSubmit)="onLogin($event)">
+        <!-- Phone -->
+        <div class="space-y-2">
+          <label for="phone" class="block text-xs font-bold text-slate-500 uppercase tracking-wide ml-1">
+            Registered Mobile
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <input id="phone" type="text" [(ngModel)]="phone" name="phone" placeholder="Enter official number"
+              inputmode="tel" autocomplete="tel"
+              class="block w-full pl-10 pr-3 py-3 border border-orange-200 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all font-medium text-slate-800"
+              required />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-2">
+          <label for="password" class="block text-xs font-bold text-slate-500 uppercase tracking-wide ml-1">
+            Secure Password
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="Enter password"
+              [disabled]="loading"
+              class="block w-full pl-10 pr-3 py-3 border border-orange-200 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all font-medium text-slate-800"
+              required />
+          </div>
+        </div>
+
+        <!-- Button -->
+        <button type="submit" [disabled]="loading"
+          class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-lg text-sm font-bold text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 hover:scale-[1.02] transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed uppercase tracking-wider">
+          <span *ngIf="loading" class="loader-spiritual w-5 h-5 border-2 border-white mr-2"></span>
+          <span *ngIf="!loading">Secure Sign In</span>
+          <span *ngIf="loading">Authenticating...</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text-xs text-slate-500 font-semibold uppercase tracking-widest">&copy; 2025 Shri Mahakal Darshan
+        Prabandhan</p>
+    </div>
+  </div>
+</div>

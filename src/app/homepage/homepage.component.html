@@ -1,0 +1,213 @@
+<div class="min-h-screen bg-orange-50 font-['Inter']">
+  <!-- Hero Section -->
+  <div class="relative h-[600px] w-full overflow-hidden bg-slate-900">
+    <!-- Background Image (Placeholder for Mahakaal/Temple) -->
+    <!-- Using a grand temple/spiritual aesthetic placeholder -->
+    <div class="absolute inset-0 opacity-60">
+      <img src="https://images.unsplash.com/photo-1590076215667-875d4ef2d7ee?q=80&w=2070&auto=format&fit=crop"
+        alt="Mahakaal Temple Ambience" class="w-full h-full object-cover animate-pan" />
+    </div>
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-orange-900 via-transparent to-slate-900/50"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+      <div class="mb-4 animate-bounce-slow">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/200px-Emblem_of_India.svg.png"
+          alt="Govt Emblem" class="h-16 drop-shadow-lg opacity-90 invert brightness-0 grayscale"
+          style="filter: brightness(0) invert(1);" />
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-xl font-['Outfit'] tracking-wide">
+        Shri Mahakaleshwar
+      </h1>
+      <p class="text-2xl md:text-3xl text-orange-100 font-medium mt-2 drop-shadow-md">
+        Jyotirlinga Darshan Booking Portal
+      </p>
+
+      <div class="h-1 w-24 bg-orange-500 rounded-full my-6"></div>
+
+      <p class="text-lg text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed shadow-black/50 drop-shadow-md">
+        Official government platform for protocol darshan approvals. <br>
+        Experience the divinity of Ujjain with seamless administration.
+      </p>
+
+      <div class="flex gap-4">
+        <a routerLink="/login"
+          class="px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-full text-lg shadow-lg shadow-orange-900/50 hover:scale-105 transition-transform flex items-center gap-2 border border-orange-400/50">
+          <span>Official Login</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Sections -->
+  <div class="max-w-7xl mx-auto px-4 py-16 -mt-20 relative z-20 space-y-16">
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Card 1: History -->
+      <div
+        class="glass p-8 rounded-3xl bg-white/95 border-t-8 border-orange-500 hover:-translate-y-2 transition-transform shadow-xl">
+        <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-3 font-['Outfit']">The Legend</h3>
+        <p class="text-slate-600 leading-relaxed">
+          Shri Mahakaleshwar is one of the 12 Jyotirlingas, the only one facing south (Dakshinamukhi). It is believed
+          that Lord Shiva resides here in the form of Mahakal, the ruler of time and death.
+        </p>
+      </div>
+
+      <!-- Card 2: Timings -->
+      <div
+        class="glass p-8 rounded-3xl bg-white/95 border-t-8 border-red-600 hover:-translate-y-2 transition-transform shadow-xl">
+        <div class="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center text-red-600 mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-3 font-['Outfit']">Darshan Timings</h3>
+        <ul class="space-y-3 text-slate-600">
+          <li class="flex justify-between border-b border-dashed border-red-200 pb-1">
+            <span>Bhasma Aarti</span>
+            <span class="font-bold text-red-700">4:00 AM</span>
+          </li>
+          <li class="flex justify-between border-b border-dashed border-red-200 pb-1">
+            <span>Morning Darshan</span>
+            <span class="font-bold text-slate-800">7:00 AM - 1:00 PM</span>
+          </li>
+          <li class="flex justify-between border-b border-dashed border-red-200 pb-1">
+            <span>Evening Aarti</span>
+            <span class="font-bold text-slate-800">6:30 PM - 7:00 PM</span>
+          </li>
+          <li class="flex justify-between">
+            <span>Shayan Aarti</span>
+            <span class="font-bold text-slate-800">11:00 PM</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3: Guidelines -->
+      <div
+        class="glass p-8 rounded-3xl bg-white/95 border-t-8 border-orange-500 hover:-translate-y-2 transition-transform shadow-xl">
+        <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-3 font-['Outfit']">Guidelines</h3>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          All devotees must adhere to the temple's dress code and security protocols.
+        </p>
+        <div class="space-y-2">
+          <span
+            class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full mr-2">
+            Traditional Wear
+          </span>
+          <span class="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full">
+            No Electronics
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grand About Section -->
+    <div
+      class="flex flex-col md:flex-row items-center gap-12 bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-orange-100">
+      <div class="w-full md:w-1/2">
+        <img
+          src="https://indiathrills.com/wp-content/uploads/2025/03/Mahakaleshwar-Darshan-Booking-2025-With-Timings-Seeghra-Darshan-Bhasma-Aarti-1.jpg"
+          alt="Temple Corridor"
+          class="rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 ring-8 ring-orange-50 border-4 border-white h-auto w-full object-cover aspect-[4/3]">
+      </div>
+      <div class="w-full md:w-1/2 space-y-6">
+        <h2 class="text-3xl md:text-5xl font-bold font-['Outfit'] text-slate-800">
+          Digital India Initiative <br>
+          <span class="text-gradient-spiritual">Mahakal Lok</span>
+        </h2>
+        <p class="text-lg text-slate-600 leading-relaxed">
+          This centralized approval system is part of the "Smart Darshan" initiative by the Ujjain Administration. It
+          ensures transparency, efficiency, and seamless coordination for protocol visitors.
+        </p>
+        <p class="text-lg text-slate-600 leading-relaxed">
+          Witness the divine energy of the Mahakal Corridor, where spirituality meets modern architecture.
+        </p>
+        <button
+          class="px-6 py-3 border-2 border-orange-500 text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-colors">
+          Read More about Mahakal Lok
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t-4 border-orange-600">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h4 class="text-white font-bold text-lg mb-4 font-['Outfit']">Mahakal Darshan</h4>
+        <p class="text-sm">
+          Official Protocol Portal for Ujjain Mahakaleshwar Temple Management Committee.
+        </p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-lg mb-4 font-['Outfit']">Quick Links</h4>
+        <ul class="space-y-2 text-sm">
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Administration</li>
+          <li>Privacy Policy</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-lg mb-4 font-['Outfit']">Contact</h4>
+        <p class="text-sm">
+          Mahakal Marg, Ujjain<br>
+          Madhya Pradesh, 456006<br>
+          Helpline: 1800-233-XXXX
+        </p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold text-lg mb-4 font-['Outfit']">Secure & Safe</h4>
+        <div class="flex gap-2 text-2xl text-slate-500">
+          <div class="w-8 h-8 bg-slate-800 rounded flex items-center justify-center">🔒</div>
+          <div class="w-8 h-8 bg-slate-800 rounded flex items-center justify-center">🇮🇳</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center pt-8 border-t border-slate-800 text-sm font-medium">
+      &copy; 2025 Mahakal Darshan Protocol. Government of Madhya Pradesh.
+    </div>
+  </footer>
+</div>
+
+<style>
+  .animate-pan {
+    animation: pan 20s infinite alternate linear;
+  }
+
+  @keyframes pan {
+    from {
+      transform: scale(1.1);
+    }
+
+    to {
+      transform: scale(1.0);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+</style>

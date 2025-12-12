@@ -9,7 +9,7 @@ export class ApproverService {
 
   
   // ✅ Store IP in one variable
-  private API_IP = 'http://10.120.10.154:8886';
+  private API_IP = 'https://mahakaal.inxeoz.com';
 
   // ✅ Base URL auto-built using IP
   private baseUrl =

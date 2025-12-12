@@ -17,7 +17,8 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
 
   // ✅ Protected routes
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ViewApproverProfileComponent, canActivate: [AuthGuard] },
   { path: 'updateprofile', component: UpdateApproverProfileComponent, canActivate: [AuthGuard] },
 
